@@ -775,7 +775,6 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState(null);
   const [clickedStation, setClickedStation] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [soundEnabled, setSoundEnabled] = useState(() => {
     if (typeof window === "undefined") return true;
     const saved = localStorage.getItem("bryson_audio_enabled");
@@ -836,14 +835,6 @@ export default function App() {
   const triggerBlip = useCallback((type) => {
     playBlipSound(type, soundEnabled);
   }, [soundEnabled]);
-
-  const handlePointerMove = useCallback((e) => {
-    if (typeof window === "undefined") return;
-    setMousePos({
-      x: (e.clientX / window.innerWidth) * 2 - 1,
-      y: -(e.clientY / window.innerHeight) * 2 + 1,
-    });
-  }, []);
 
   const toggleSound = useCallback(() => {
     setSoundEnabled((prev) => {
@@ -1048,7 +1039,7 @@ export default function App() {
         ) : (
           /* Desktop 3D Canvas Scene — Rock Solid, Zero Auto-Rotate, Easy Clicks */
           <>
-            <div className="canvas-wrap" onPointerMove={handlePointerMove}>
+            <div className="canvas-wrap">
               <Canvas
                 camera={{ position: [0, 2.4, 5.4], fov: 42 }}
                 dpr={[1, 1.75]}
@@ -1065,7 +1056,6 @@ export default function App() {
                     setHovered={setHovered}
                     playBlip={triggerBlip}
                     clickedStation={clickedStation}
-                    mousePos={mousePos}
                     reducedMotion={reducedMotion}
                   />
                   <OrbitControls

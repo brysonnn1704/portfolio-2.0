@@ -405,7 +405,6 @@ export function SceneContent({
   setHovered,
   playBlip,
   clickedStation,
-  mousePos,
   reducedMotion = false,
 }) {
   return (
@@ -473,7 +472,6 @@ export function SceneContent({
       <Character
         hovered={hovered}
         clickedStation={clickedStation}
-        mousePos={mousePos}
         reducedMotion={reducedMotion}
       />
 
