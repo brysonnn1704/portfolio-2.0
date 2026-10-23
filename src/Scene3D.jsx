@@ -1,5 +1,5 @@
 import { RoundedBox, Html, ContactShadows, Grid, Sparkles } from "@react-three/drei";
-import { Character } from "./Character.jsx";
+import { DoodleCharacter } from "./DoodleCharacter.jsx";
 import { SpaceAtmosphere } from "./SpaceEffects.jsx";
 
 function InteractiveStation({
@@ -468,12 +468,24 @@ export function SceneContent({
         <meshBasicMaterial color="#38BDF8" transparent opacity={0.16} />
       </mesh>
 
-      {/* Center 3D Interactive Character of Bryson */}
-      <Character
-        hovered={hovered}
-        clickedStation={clickedStation}
-        reducedMotion={reducedMotion}
-      />
+      {/* Center 2D Cute Handsome Doodle Character of Bryson */}
+      <Html position={[0, -0.45, 0]} center distanceFactor={7.2} zIndexRange={[30, 0]}>
+        <DoodleCharacter
+          hovered={hovered}
+          clickedStation={clickedStation}
+          reducedMotion={reducedMotion}
+        />
+      </Html>
+
+      {/* Center Desk Core Hub Pedestal */}
+      <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.34, 0.40, 36]} />
+        <meshBasicMaterial
+          color={hovered ? "#F2E900" : "#38BDF8"}
+          transparent
+          opacity={hovered ? 0.45 : 0.2}
+        />
+      </mesh>
 
       {/* Ambient floating dust particles */}
       <Sparkles count={42} scale={14} size={2.2} speed={0.25} color="#F2E900" opacity={0.3} />
