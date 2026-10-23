@@ -774,6 +774,8 @@ export default function App() {
   const [panel, setPanel] = useState(null);
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState(null);
+  const [clickedStation, setClickedStation] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [soundEnabled, setSoundEnabled] = useState(() => {
     if (typeof window === "undefined") return true;
     const saved = localStorage.getItem("bryson_audio_enabled");
@@ -781,6 +783,12 @@ export default function App() {
   });
   const [forceMobileMode, setForceMobileMode] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+
+  // Check prefers-reduced-motion
+  const [reducedMotion] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   // Keep sound preference in localStorage
   useEffect(() => {
@@ -810,6 +818,7 @@ export default function App() {
   const isFallback = (isMobileScreen || !webglAvailable || forceMobileMode);
 
   const openPanel = useCallback((id) => {
+    setClickedStation(id);
     setPanel(id);
     playBlipSound("click", soundEnabled);
   }, [soundEnabled]);
@@ -827,6 +836,14 @@ export default function App() {
   const triggerBlip = useCallback((type) => {
     playBlipSound(type, soundEnabled);
   }, [soundEnabled]);
+
+  const handlePointerMove = useCallback((e) => {
+    if (typeof window === "undefined") return;
+    setMousePos({
+      x: (e.clientX / window.innerWidth) * 2 - 1,
+      y: -(e.clientY / window.innerHeight) * 2 + 1,
+    });
+  }, []);
 
   const toggleSound = useCallback(() => {
     setSoundEnabled((prev) => {
@@ -1031,7 +1048,7 @@ export default function App() {
         ) : (
           /* Desktop 3D Canvas Scene — Rock Solid, Zero Auto-Rotate, Easy Clicks */
           <>
-            <div className="canvas-wrap">
+            <div className="canvas-wrap" onPointerMove={handlePointerMove}>
               <Canvas
                 camera={{ position: [0, 2.4, 5.4], fov: 42 }}
                 dpr={[1, 1.75]}
@@ -1047,6 +1064,9 @@ export default function App() {
                     hovered={hovered}
                     setHovered={setHovered}
                     playBlip={triggerBlip}
+                    clickedStation={clickedStation}
+                    mousePos={mousePos}
+                    reducedMotion={reducedMotion}
                   />
                   <OrbitControls
                     enablePan={false}

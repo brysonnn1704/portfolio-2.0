@@ -1,4 +1,6 @@
 import { RoundedBox, Html, ContactShadows, Grid, Sparkles } from "@react-three/drei";
+import { Character } from "./Character.jsx";
+import { SpaceAtmosphere } from "./SpaceEffects.jsx";
 
 function InteractiveStation({
   id,
@@ -397,11 +399,22 @@ function CyberTerminal({ hovered }) {
 }
 
 // Full 3D Scene Assembly
-export function SceneContent({ onPick, hovered, setHovered, playBlip }) {
+export function SceneContent({
+  onPick,
+  hovered,
+  setHovered,
+  playBlip,
+  clickedStation,
+  mousePos,
+  reducedMotion = false,
+}) {
   return (
     <>
+      {/* Space & Cosmic Atmosphere Effects */}
+      <SpaceAtmosphere reducedMotion={reducedMotion} />
+
       {/* Studio Lighting */}
-      <ambientLight intensity={1.9} />
+      <ambientLight intensity={1.8} />
       <hemisphereLight args={["#E2E8F0", "#07090D", 1.2]} />
       <directionalLight
         position={[4.5, 7.5, 4.0]}
@@ -415,6 +428,10 @@ export function SceneContent({ onPick, hovered, setHovered, playBlip }) {
       <pointLight position={[0, 3.2, 0.5]} intensity={1.2} color="#FFFBEB" distance={12} decay={2} />
       <pointLight position={[-2.4, 2.0, 1.8]} intensity={0.9} color="#67E8F9" distance={8} decay={2} />
       <pointLight position={[2.5, 1.8, 1.2]} intensity={0.85} color="#FBBF24" distance={8} decay={2} />
+
+      {/* Stylized Golden Character Rim & Accent Light */}
+      <pointLight position={[0, 1.8, -1.2]} intensity={1.5} color="#FDE047" distance={5} decay={2} />
+      <pointLight position={[0, 0.8, 1.4]} intensity={0.8} color="#38BDF8" distance={4} decay={2} />
 
       {/* Ground plane & subtle grid */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
@@ -451,11 +468,14 @@ export function SceneContent({ onPick, hovered, setHovered, playBlip }) {
         <ringGeometry args={[2.14, 2.16, 64]} />
         <meshBasicMaterial color="#38BDF8" transparent opacity={0.16} />
       </mesh>
-      {/* Center Desk Core Hub */}
-      <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.28, 0.32, 32]} />
-        <meshBasicMaterial color="#38BDF8" transparent opacity={0.18} />
-      </mesh>
+
+      {/* Center 3D Interactive Character of Bryson */}
+      <Character
+        hovered={hovered}
+        clickedStation={clickedStation}
+        mousePos={mousePos}
+        reducedMotion={reducedMotion}
+      />
 
       {/* Ambient floating dust particles */}
       <Sparkles count={42} scale={14} size={2.2} speed={0.25} color="#F2E900" opacity={0.3} />
