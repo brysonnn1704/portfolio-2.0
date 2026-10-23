@@ -1,6 +1,29 @@
+import { useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
 import { RoundedBox, Html, ContactShadows, Grid, Sparkles } from "@react-three/drei";
-import { DoodleCharacter } from "./DoodleCharacter.jsx";
+import * as THREE from "three";
 import { SpaceAtmosphere } from "./SpaceEffects.jsx";
+
+// 3D-to-2D Screen Projector for Center Doodle Character
+export function CenterProjector({ onProject }) {
+  const v = useMemo(() => new THREE.Vector3(0, -0.36, 0), []);
+  const centerPos = useMemo(() => new THREE.Vector3(0, -0.36, 0), []);
+
+  useFrame(({ camera, size }) => {
+    if (!onProject) return;
+    v.set(0, -0.36, 0);
+    v.project(camera);
+
+    const x = (v.x * 0.5 + 0.5) * size.width;
+    const y = (-v.y * 0.5 + 0.5) * size.height;
+    const dist = camera.position.distanceTo(centerPos);
+    const scale = Math.max(0.7, Math.min(1.5, 6.2 / dist));
+
+    onProject(x, y, scale);
+  });
+
+  return null;
+}
 
 function InteractiveStation({
   id,
@@ -404,7 +427,7 @@ export function SceneContent({
   hovered,
   setHovered,
   playBlip,
-  clickedStation,
+  clickedStation: _clickedStation,
   reducedMotion = false,
 }) {
   return (
@@ -467,15 +490,6 @@ export function SceneContent({
         <ringGeometry args={[2.14, 2.16, 64]} />
         <meshBasicMaterial color="#38BDF8" transparent opacity={0.16} />
       </mesh>
-
-      {/* Center 2D Cute Handsome Doodle Character of Bryson */}
-      <Html position={[0, -0.45, 0]} center distanceFactor={7.2} zIndexRange={[30, 0]}>
-        <DoodleCharacter
-          hovered={hovered}
-          clickedStation={clickedStation}
-          reducedMotion={reducedMotion}
-        />
-      </Html>
 
       {/* Center Desk Core Hub Pedestal */}
       <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -566,9 +580,9 @@ export function SceneContent({
       {/* 05: ID Badge -> About (Front Center) */}
       <InteractiveStation
         id="about"
-        position={[0, 0.04, 2.15]}
+        position={[0, 0.04, 2.22]}
         rotation={[0, 0, 0]}
-        pinOffset={0.76}
+        pinOffset={-0.04}
         hitboxSize={[1.5, 1.1, 1.4]}
         label="About"
         icon="🪪"

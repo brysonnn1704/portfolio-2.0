@@ -1,7 +1,9 @@
 /* Handsome Sticker/Doodle Avatar Styles */
 
 .doodle-container {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 210px;
   height: 255px;
   pointer-events: none;
@@ -11,6 +13,16 @@
   justify-content: center;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
   transform-origin: bottom center;
+  z-index: 10;
+  will-change: transform;
+}
+
+.doodle-container.static {
+  position: relative;
+  margin: 0 auto 16px auto;
+  transform: none !important;
+  width: 160px;
+  height: 195px;
 }
 
 /* White sticker outer stroke & soft cel-shade styling */

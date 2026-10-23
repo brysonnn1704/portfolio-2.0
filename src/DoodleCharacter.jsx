@@ -12,9 +12,11 @@ const STATION_DIRECTIONS = {
 };
 
 export function DoodleCharacter({
+  posRef,
   hovered,
   clickedStation,
   reducedMotion = false,
+  isStatic = false,
 }) {
   const containerRef = useRef(null);
 
@@ -113,6 +115,12 @@ export function DoodleCharacter({
       const s = animState.current;
       s.idleTimer += delta;
 
+      // Update 2D screen anchoring from 3D camera projection
+      if (containerRef.current && posRef?.current) {
+        const { x, y, scale } = posRef.current;
+        containerRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -90%) scale(${scale})`;
+      }
+
       // Calculate vector from character head to mouse cursor
       let targetDx = 0;
       let targetDy = 0;
@@ -120,7 +128,7 @@ export function DoodleCharacter({
       if (hovered && STATION_DIRECTIONS[hovered]) {
         targetDx = STATION_DIRECTIONS[hovered].x;
         targetDy = STATION_DIRECTIONS[hovered].y;
-      } else if (containerRef.current && s.idleTimer < 5.0) {
+      } else if (containerRef.current && s.idleTimer < 5.0 && s.mouseX > 0) {
         const rect = containerRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height * 0.35;
@@ -259,10 +267,10 @@ export function DoodleCharacter({
 
     reqId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(reqId);
-  }, [hovered, reducedMotion]);
+  }, [hovered, reducedMotion, posRef]);
 
   return (
-    <div className="doodle-container" ref={containerRef}>
+    <div className={`doodle-container ${isStatic ? "static" : ""}`} ref={containerRef}>
       {/* Speech Bubble Doodle */}
       <div className="doodle-speech-wrap" ref={speechWrapRef}>
         <div className="doodle-speech-bubble">

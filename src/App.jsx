@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense, useCallback } from "react";
+import { useEffect, useState, useRef, Suspense, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import {
@@ -12,7 +12,8 @@ import {
   YOUTUBE_VIDEOS,
 } from "./data.js";
 import { ProjectVisual } from "./ProjectVisuals.jsx";
-import { SceneContent } from "./Scene3D.jsx";
+import { SceneContent, CenterProjector } from "./Scene3D.jsx";
+import { DoodleCharacter } from "./DoodleCharacter.jsx";
 
 const Arrow = () => <span aria-hidden="true" style={{ display: "inline-block" }}>↗</span>;
 
@@ -775,6 +776,7 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState(null);
   const [clickedStation, setClickedStation] = useState(null);
+  const doodlePosRef = useRef({ x: 640, y: 480, scale: 1 });
   const [soundEnabled, setSoundEnabled] = useState(() => {
     if (typeof window === "undefined") return true;
     const saved = localStorage.getItem("bryson_audio_enabled");
@@ -835,6 +837,12 @@ export default function App() {
   const triggerBlip = useCallback((type) => {
     playBlipSound(type, soundEnabled);
   }, [soundEnabled]);
+
+  const handleProject = useCallback((x, y, scale) => {
+    doodlePosRef.current.x = x;
+    doodlePosRef.current.y = y;
+    doodlePosRef.current.scale = scale;
+  }, []);
 
   const toggleSound = useCallback(() => {
     setSoundEnabled((prev) => {
@@ -995,6 +1003,7 @@ export default function App() {
           /* Mobile / Fallback Card View */
           <div className="mobile-container">
             <div className="bio-box">
+              <DoodleCharacter isStatic reducedMotion={reducedMotion} />
               <span className="mono" style={{ color: "var(--accent)" }}>
                 PORTFOLIO • BRYSON PRAKASH ALMEIDA
               </span>
@@ -1058,6 +1067,7 @@ export default function App() {
                     clickedStation={clickedStation}
                     reducedMotion={reducedMotion}
                   />
+                  <CenterProjector onProject={handleProject} />
                   <OrbitControls
                     enablePan={false}
                     enableDamping
@@ -1073,6 +1083,14 @@ export default function App() {
                   />
                 </Suspense>
               </Canvas>
+
+              {/* Cute, Handsome 2D Doodle Character Anchored at 3D Desk Center */}
+              <DoodleCharacter
+                posRef={doodlePosRef}
+                hovered={hovered}
+                clickedStation={clickedStation}
+                reducedMotion={reducedMotion}
+              />
             </div>
 
             {/* Hover Indicator Pill at Top */}
