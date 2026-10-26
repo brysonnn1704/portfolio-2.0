@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { RoundedBox, Html, ContactShadows, Grid, Sparkles } from "@react-three/drei";
+import { RoundedBox, ContactShadows, Grid, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { SpaceAtmosphere } from "./SpaceEffects.jsx";
+import { STATION_DATA } from "./stationsData.js";
 
 // 3D-to-2D Screen Projector for Center Doodle Character
 export function CenterProjector({ onProject }) {
@@ -25,14 +26,45 @@ export function CenterProjector({ onProject }) {
   return null;
 }
 
+// 3D-to-2D Screen Projector for All 6 Station Pins (100% stable, zero React 19 unmount bugs)
+export function StationPinsProjector({ onProjectPins }) {
+  const v = useMemo(() => new THREE.Vector3(), []);
+  const v3s = useMemo(
+    () =>
+      STATION_DATA.map((s) => ({
+        id: s.id,
+        target: new THREE.Vector3(...s.pos),
+      })),
+    []
+  );
+
+  useFrame(({ camera, size }) => {
+    if (!onProjectPins) return;
+    const projected = {};
+    for (let i = 0; i < v3s.length; i++) {
+      const { id, target } = v3s[i];
+      v.copy(target);
+      v.project(camera);
+      if (v.z > 1) {
+        projected[id] = { visible: false };
+      } else {
+        const x = (v.x * 0.5 + 0.5) * size.width;
+        const y = (-v.y * 0.5 + 0.5) * size.height;
+        const dist = camera.position.distanceTo(target);
+        const scale = Math.max(0.65, Math.min(1.35, 7.8 / dist));
+        projected[id] = { visible: true, x, y, scale };
+      }
+    }
+    onProjectPins(projected);
+  });
+
+  return null;
+}
+
 function InteractiveStation({
   id,
   position,
   rotation = [0, 0, 0],
-  label,
-  icon,
-  n,
-  pinOffset = 0.95,
   hitboxSize = [1.6, 1.4, 1.4],
   hovered,
   setHovered,
@@ -78,21 +110,6 @@ function InteractiveStation({
       <group rotation={rotation} scale={isHovered ? 1.04 : 1}>
         {children}
       </group>
-
-      {/* Stable, Beautiful Floating HTML Badge */}
-      <Html position={[0, pinOffset, 0]} center distanceFactor={8} zIndexRange={[50, 0]}>
-        <button
-          className={`pin-tag ${isHovered ? "active" : ""}`}
-          onClick={handleClick}
-          type="button"
-          aria-label={`Open ${label}`}
-        >
-          <span className="pin-dot" />
-          <span className="pin-num">{n}</span>
-          <span className="pin-label">{icon} {label}</span>
-          <span className="pin-arrow">↗</span>
-        </button>
-      </Html>
 
       {/* Uniform Ground Pedestal Ring on desk */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -position[1] - 0.448, 0]}>

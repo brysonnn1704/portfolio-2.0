@@ -194,6 +194,30 @@ button {
   outline: none;
 }
 
+/* 3D Floating Interactive Pin Badges Overlay */
+.station-pins-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+.station-pins-overlay .pin-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  transform-origin: center center;
+  will-change: transform;
+}
+.station-pins-overlay .pin-tag:hover,
+.station-pins-overlay .pin-tag.active {
+  background: rgba(22, 30, 42, 0.98);
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow), var(--shadow-lg);
+  transform: none; /* Let projector manage 3D transform */
+}
+
 /* 3D Floating Interactive Pin Badges */
 .pin-tag {
   appearance: none;

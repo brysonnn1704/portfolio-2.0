@@ -12,7 +12,8 @@ import {
   YOUTUBE_VIDEOS,
 } from "./data.js";
 import { ProjectVisual } from "./ProjectVisuals.jsx";
-import { SceneContent, CenterProjector } from "./Scene3D.jsx";
+import { SceneContent, CenterProjector, StationPinsProjector } from "./Scene3D.jsx";
+import { STATION_DATA } from "./stationsData.js";
 import { DoodleCharacter } from "./DoodleCharacter.jsx";
 
 const Arrow = () => <span aria-hidden="true" style={{ display: "inline-block" }}>↗</span>;
@@ -844,6 +845,22 @@ export default function App() {
     doodlePosRef.current.scale = scale;
   }, []);
 
+  const pinElsRef = useRef({});
+
+  const handleProjectPins = useCallback((projected) => {
+    for (const id in projected) {
+      const el = pinElsRef.current[id];
+      if (!el) continue;
+      const data = projected[id];
+      if (!data.visible) {
+        el.style.display = "none";
+      } else {
+        el.style.display = "inline-flex";
+        el.style.transform = `translate3d(${data.x}px, ${data.y}px, 0) translate(-50%, -50%) scale(${data.scale})`;
+      }
+    }
+  }, []);
+
   const toggleSound = useCallback(() => {
     setSoundEnabled((prev) => {
       const next = !prev;
@@ -1013,6 +1030,7 @@ export default function App() {
                     reducedMotion={reducedMotion}
                   />
                   <CenterProjector onProject={handleProject} />
+                  <StationPinsProjector onProjectPins={handleProjectPins} />
                   <OrbitControls
                     enablePan={false}
                     enableDamping
@@ -1036,6 +1054,32 @@ export default function App() {
                 clickedStation={clickedStation}
                 reducedMotion={reducedMotion}
               />
+
+              {/* Native 3D Floating Station Pins (100% stable, zero React 19 unmount bugs) */}
+              <div className="station-pins-overlay">
+                {STATION_DATA.map((s) => (
+                  <button
+                    key={s.id}
+                    ref={(el) => {
+                      if (el) pinElsRef.current[s.id] = el;
+                    }}
+                    className={`pin-tag ${hovered === s.id ? "active" : ""}`}
+                    onClick={() => openPanel(s.id)}
+                    onMouseEnter={() => {
+                      setHovered(s.id);
+                      triggerBlip("hover");
+                    }}
+                    onMouseLeave={() => setHovered(null)}
+                    type="button"
+                    aria-label={`Open ${s.label}`}
+                  >
+                    <span className="pin-dot" />
+                    <span className="pin-num">{s.n}</span>
+                    <span className="pin-label">{s.icon} {s.label}</span>
+                    <span className="pin-arrow">↗</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </>
         )}
