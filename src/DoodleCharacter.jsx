@@ -305,9 +305,14 @@ export function DoodleCharacter({
             <stop offset="0%" stopColor="#1E2B40" />
             <stop offset="100%" stopColor="#131B29" />
           </linearGradient>
-          <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#1C232E" />
-            <stop offset="100%" stopColor="#0E1217" />
+          <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#252F3E" />
+            <stop offset="45%" stopColor="#171F2B" />
+            <stop offset="100%" stopColor="#0B0F16" />
+          </linearGradient>
+          <linearGradient id="hairClumpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2F3C4F" />
+            <stop offset="100%" stopColor="#141B26" />
           </linearGradient>
         </defs>
 
@@ -493,6 +498,20 @@ export function DoodleCharacter({
 
         {/* 6. Head, Eyes, Smirk & Voluminous Curly Hair (Pivot at neck: 140, 120) */}
         <g id="doodle-head" ref={headGroupRef}>
+          {/* Back Curly Hair Silhouette behind ears */}
+          <path
+            d="M98 114
+               C90 100 88 84 94 70
+               C100 56 112 44 126 40
+               C140 36 156 38 168 44
+               C180 50 190 62 192 78
+               C194 92 190 106 182 114
+               C176 96 166 90 154 90
+               C144 90 136 90 126 90
+               C114 90 104 96 98 114 Z"
+            fill="#0B0F16"
+          />
+
           {/* Neck */}
           <rect
             x="132"
@@ -587,52 +606,175 @@ export function DoodleCharacter({
             <path d="M144 106 Q152 110 160 106" fill="url(#skinGrad)" stroke="#0A0E14" strokeWidth="3" />
           </g>
 
-          {/* 7. Voluminous Dark Curly/Wavy Mop-Top Hair (Signature feature from photo) */}
+          {/* 7. Voluminous Dark Curly/Wavy Textured Mop Hair (Signature feature from photo) */}
           <g id="doodle-hair" ref={hairGroupRef}>
-            {/* Base Volume Dome */}
+            {/* Front Voluminous Curly Mop Silhouette */}
             <path
-              d="M102 96 Q92 78 106 62 Q122 46 142 46 Q164 46 176 62 Q188 78 178 96 Q184 106 174 114 Q166 94 158 92 Q142 88 126 92 Q116 94 108 114 Q98 106 102 96 Z"
+              d="M104 100
+                 C94 96 90 86 92 78
+                 C88 68 94 56 104 48
+                 C112 42 122 38 132 40
+                 C138 34 148 34 156 39
+                 C166 38 174 42 182 52
+                 C190 60 192 72 188 82
+                 C190 92 184 98 176 100
+                 C172 92 166 86 160 85
+                 C154 91 149 92 144 86
+                 C139 92 134 92 128 86
+                 C122 91 117 90 114 85
+                 C110 89 106 95 104 100 Z"
               fill="url(#hairGrad)"
               stroke="#0A0E14"
               strokeWidth="3.2"
               strokeLinejoin="round"
             />
-            {/* Curly Texture Clumps on Top Crown */}
+
+            {/* Curly Volume Clumps & Internal Lobes for Deep Texture */}
+            {/* Top-Left Curl Clump */}
             <path
-              d="M108 66 Q116 54 128 58 Q140 48 152 56 Q166 52 172 66"
+              d="M104 54 C112 45 124 46 130 54 C124 62 112 62 104 54 Z"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.2"
+              strokeLinejoin="round"
+            />
+            {/* High Crown Curl Clump */}
+            <path
+              d="M130 42 C138 35 150 36 156 44 C148 52 136 50 130 42 Z"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.2"
+              strokeLinejoin="round"
+            />
+            {/* Top-Right Curl Clump */}
+            <path
+              d="M156 44 C166 40 178 48 178 58 C170 64 160 56 156 44 Z"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.2"
+              strokeLinejoin="round"
+            />
+
+            {/* Glossy Specular Highlights on Curl Crests */}
+            <path
+              d="M112 48 Q122 43 130 46"
               fill="none"
-              stroke="#2B3647"
-              strokeWidth="3.5"
+              stroke="rgba(255, 255, 255, 0.22)"
+              strokeWidth="2.4"
               strokeLinecap="round"
             />
-            {/* Front Bouncy Waves & Loose Curls on Forehead (from photo) */}
             <path
-              d="M112 88 Q118 78 126 84 Q134 76 142 84 Q150 78 158 84 Q166 78 170 88"
+              d="M138 38 Q146 36 152 40"
               fill="none"
-              stroke="#0A0E14"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-            />
-            {/* Loose Curly Fringe Strands */}
-            <path
-              d="M124 84 Q128 92 126 95"
-              fill="none"
-              stroke="#0A0E14"
-              strokeWidth="3"
+              stroke="rgba(255, 255, 255, 0.25)"
+              strokeWidth="2.4"
               strokeLinecap="round"
             />
             <path
-              d="M142 84 Q146 94 143 97"
+              d="M164 44 Q172 46 176 52"
               fill="none"
-              stroke="#0A0E14"
-              strokeWidth="3"
+              stroke="rgba(255, 255, 255, 0.2)"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+            />
+
+            {/* Dynamic Swirling Curl Ribs & Texture Strokes across Mid-Crown */}
+            <path
+              d="M98 72 C104 62 116 66 122 72"
+              fill="none"
+              stroke="#2C384A"
+              strokeWidth="2.8"
               strokeLinecap="round"
             />
             <path
-              d="M154 84 Q158 92 156 95"
+              d="M116 66 C124 58 136 60 142 68"
+              fill="none"
+              stroke="#2C384A"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M138 62 C146 54 158 56 164 66"
+              fill="none"
+              stroke="#2C384A"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M162 68 C170 62 180 68 184 76"
+              fill="none"
+              stroke="#2C384A"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+            />
+
+            {/* Signature Textured Forehead Fringe Curls (Framing forehead naturally above brows) */}
+            {/* Left Fringe Curl */}
+            <path
+              d="M108 90 C113 85 119 88 117 95 C115 97 113 97 111 93"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Center-Left Bouncy Curl Lock */}
+            <path
+              d="M121 87 C127 82 133 86 130 96 C128 98 125 97 124 93"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Center Signature Swirled Curl Lock */}
+            <path
+              d="M133 85 C141 80 146 86 144 96 C142 99 138 98 137 93"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Center-Right Forehead Curl */}
+            <path
+              d="M147 87 C154 82 160 87 157 95 C155 98 152 97 150 92"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Right Temple Feathered Wave */}
+            <path
+              d="M159 87 C166 83 172 88 168 95 C166 97 163 96 162 91"
+              fill="url(#hairClumpGrad)"
+              stroke="#0A0E14"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {/* Delicate Accent Curl Wisps on Forehead */}
+            <path
+              d="M119 93 Q121 97 124 96"
               fill="none"
               stroke="#0A0E14"
-              strokeWidth="3"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M135 93 Q138 98 141 97"
+              fill="none"
+              stroke="#0A0E14"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M149 93 Q152 97 155 96"
+              fill="none"
+              stroke="#0A0E14"
+              strokeWidth="2"
               strokeLinecap="round"
             />
           </g>

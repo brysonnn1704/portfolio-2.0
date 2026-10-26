@@ -414,7 +414,9 @@ button {
 }
 
 .menu-btn {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: rgba(14, 19, 27, 0.85);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
@@ -430,17 +432,6 @@ button {
 .menu-btn:hover {
   background: var(--card-hover);
   border-color: var(--border-hover);
-}
-
-@media (max-width: 960px) {
-  .top-nav {
-    display: none;
-  }
-  .menu-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
 }
 
 /* Bottom Interactive Station Dock */

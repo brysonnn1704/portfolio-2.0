@@ -866,15 +866,6 @@ export default function App() {
     { id: "github", label: "GitHub", icon: "⚡", n: "06" },
   ];
 
-  const labelMap = {
-    projects: "01 • MONITOR — Selected Projects (Click to open)",
-    systems: "02 • BLADE SERVER — Cloud & Systems Architecture (Click)",
-    resume: "03 • NOTEBOOK — Curriculum Vitae & Resume (Click)",
-    creative: "04 • CAMERA — Video Editing & YouTube Media (Click)",
-    about: "05 • ID BADGE — About Bryson & Journey (Click)",
-    github: "06 • TERMINAL — Live GitHub Repositories (Click)",
-  };
-
   // Keyboard Shortcuts
   useEffect(() => {
     const handleKey = (e) => {
@@ -919,52 +910,6 @@ export default function App() {
             <span className="live-dot" /> B.Tech Fr. CRCE
           </span>
         </div>
-
-        {/* Desktop Quick Nav */}
-        <nav className="top-nav" aria-label="Main Navigation">
-          <button
-            className={`top-nav-btn ${panel === "projects" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("projects")}
-          >
-            Projects
-          </button>
-          <button
-            className={`top-nav-btn ${panel === "systems" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("systems")}
-          >
-            Systems
-          </button>
-          <button
-            className={`top-nav-btn ${panel === "about" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("about")}
-          >
-            About
-          </button>
-          <button
-            className={`top-nav-btn ${panel === "creative" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("creative")}
-          >
-            Creative
-          </button>
-          <button
-            className={`top-nav-btn ${panel === "resume" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("resume")}
-          >
-            Resume
-          </button>
-          <button
-            className={`top-nav-btn ${panel === "contact" ? "active" : ""}`}
-            onMouseEnter={() => triggerBlip("hover")}
-            onClick={() => openPanel("contact")}
-          >
-            Contact
-          </button>
-        </nav>
 
         {/* Action Tools */}
         <div className="top-actions">
@@ -1091,37 +1036,6 @@ export default function App() {
                 clickedStation={clickedStation}
                 reducedMotion={reducedMotion}
               />
-            </div>
-
-            {/* Hover Indicator Pill at Top */}
-            <div className={`hover-label ${hovered ? "" : "hidden"}`} role="status" aria-live="polite">
-              <span className="dot" aria-hidden="true" />
-              <span>{hovered ? labelMap[hovered] : "Hover an object"}</span>
-            </div>
-
-            {/* Bottom Station Dock: Fast 1-Click Access to Every Section */}
-            <div className="station-dock-wrap">
-              <div className="station-dock" role="navigation" aria-label="3D Stations">
-                {stations.map((s) => (
-                  <button
-                    key={s.id}
-                    className={`station-dock-btn ${hovered === s.id ? "active" : ""}`}
-                    aria-label={`Open ${s.label} station (${s.n})`}
-                    onMouseEnter={() => {
-                      setHovered(s.id);
-                      triggerBlip("hover");
-                    }}
-                    onMouseLeave={() => setHovered(null)}
-                    onClick={() => openPanel(s.id)}
-                  >
-                    <span className="dock-icon">{s.icon}</span>
-                    <span>{s.label}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="dock-hint">
-                Click any 3D station or dock button • Drag to orbit desk
-              </div>
             </div>
           </>
         )}
