@@ -561,6 +561,41 @@ function ResumePanel({ onClose }) {
 // 06: GitHub Live Explorer Panel
 const FALLBACK_REPOS = [
   {
+    name: "pastepro",
+    html_url: "https://github.com/brysonnn1704/pastepro",
+    description: "Private, E2EE iPhone-to-PC clipboard bridge built with WebSockets and zero-knowledge encryption.",
+    language: "TypeScript",
+    updated_at: "2026-10-30T17:23:44Z",
+  },
+  {
+    name: "parkcloud",
+    html_url: "https://github.com/brysonnn1704/parkcloud",
+    description: "Cloud-Based Smart Parking Management & Analytics System for Indian Cities with Electron, React, Node.js, PostgreSQL & Terraform.",
+    language: "TypeScript",
+    updated_at: "2026-11-02T15:18:20Z",
+  },
+  {
+    name: "study-mode-launcher",
+    html_url: "https://github.com/brysonnn1704/study-mode-launcher",
+    description: "Desktop workspace automation, multi-profile browser launcher, Pomodoro focus timer & analytics built with Python and CustomTkinter.",
+    language: "Python",
+    updated_at: "2026-11-02T15:18:00Z",
+  },
+  {
+    name: "instapulse",
+    html_url: "https://github.com/brysonnn1704/instapulse",
+    description: "Modern Instagram-inspired social media platform built with React 19, Vite, Tailwind CSS v4, Lucide & Zustand.",
+    language: "JavaScript",
+    updated_at: "2026-11-02T15:19:00Z",
+  },
+  {
+    name: "expense-tracker",
+    html_url: "https://github.com/brysonnn1704/expense-tracker",
+    description: "Smart personal finance and categorical budget manager built with React 19, Vite, and Tailwind CSS.",
+    language: "JavaScript",
+    updated_at: "2026-11-02T15:23:15Z",
+  },
+  {
     name: "crave-food-delivery",
     html_url: "https://github.com/brysonnn1704/crave-food-delivery",
     description: "Crave Food Delivery Web Application inspired by Zomato, built with React, Vite, and real OpenStreetMap data.",

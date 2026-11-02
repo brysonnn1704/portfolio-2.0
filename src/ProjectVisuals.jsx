@@ -1,5 +1,176 @@
 export function ProjectVisual({ id }) {
   switch (id) {
+    case "pastepro":
+      return (
+        <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-pastepro">
+          <title id="title-pastepro">PastePro E2EE Clipboard Bridge Preview</title>
+          <rect width="320" height="180" fill="#080C14" />
+          {/* Signal wave mesh */}
+          <path d="M40 90 Q 110 50 160 90 T 280 90" stroke="#06B6D4" strokeOpacity="0.25" strokeWidth="2" strokeDasharray="4 4" fill="none" />
+          <path d="M40 90 Q 110 130 160 90 T 280 90" stroke="#10B981" strokeOpacity="0.25" strokeWidth="2" strokeDasharray="4 4" fill="none" />
+          {/* Devices */}
+          {/* iPhone */}
+          <rect x="45" y="45" width="55" height="90" rx="8" fill="#111827" stroke="#06B6D4" strokeOpacity="0.6" strokeWidth="1.5" />
+          <rect x="52" y="55" width="41" height="70" rx="4" fill="#030712" />
+          <rect x="58" y="65" width="29" height="12" rx="2" fill="#06B6D4" fillOpacity="0.2" />
+          <text x="72" y="74" textAnchor="middle" fill="#22D3EE" fontFamily="monospace" fontSize="6.5">COPIED</text>
+          {/* Sync bridge badge */}
+          <circle cx="160" cy="90" r="22" fill="#0F172A" stroke="#10B981" strokeWidth="1.5" />
+          <text x="160" y="94" textAnchor="middle" fill="#10B981" fontFamily="sans-serif" fontSize="14" fontWeight="bold">⇄</text>
+          {/* PC Laptop */}
+          <rect x="215" y="58" width="70" height="48" rx="4" fill="#111827" stroke="#10B981" strokeOpacity="0.6" strokeWidth="1.5" />
+          <rect x="222" y="64" width="56" height="36" rx="2" fill="#030712" />
+          <text x="250" y="84" textAnchor="middle" fill="#34D399" fontFamily="monospace" fontSize="7">PASTED</text>
+          <polygon points="210,108 290,108 285,114 215,114" fill="#1F2937" />
+          {/* Badge */}
+          <rect x="20" y="16" width="160" height="18" rx="4" fill="#0B1320" stroke="#06B6D4" strokeOpacity="0.4" />
+          <text x="28" y="28" fill="#22D3EE" fontFamily="monospace" fontSize="8" fontWeight="bold">ZERO-TRUST • E2EE CLIPBOARD</text>
+          <rect x="195" y="146" width="105" height="18" rx="4" fill="#0B1514" stroke="#10B981" strokeOpacity="0.4" />
+          <text x="203" y="158" fill="#34D399" fontFamily="monospace" fontSize="7.5">AES-256-GCM / XCHACHA20</text>
+        </svg>
+      );
+
+    case "parkcloud":
+      return (
+        <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-parkcloud">
+          <title id="title-parkcloud">ParkCloud Smart Parking Management Preview</title>
+          <rect width="320" height="180" fill="#0A0E17" />
+          {/* Parking grid lines */}
+          <line x1="50" y1="50" x2="50" y2="135" stroke="#334155" strokeWidth="2" strokeDasharray="3 3" />
+          <line x1="105" y1="50" x2="105" y2="135" stroke="#334155" strokeWidth="2" strokeDasharray="3 3" />
+          <line x1="160" y1="50" x2="160" y2="135" stroke="#334155" strokeWidth="2" strokeDasharray="3 3" />
+          <line x1="215" y1="50" x2="215" y2="135" stroke="#334155" strokeWidth="2" strokeDasharray="3 3" />
+          <line x1="270" y1="50" x2="270" y2="135" stroke="#334155" strokeWidth="2" strokeDasharray="3 3" />
+          {/* Parking Bays */}
+          <rect x="58" y="58" width="40" height="70" rx="6" fill="#131B2E" stroke="#3B82F6" strokeOpacity="0.5" />
+          <text x="78" y="75" textAnchor="middle" fill="#93C5FD" fontFamily="monospace" fontSize="8" fontWeight="bold">BAY A-1</text>
+          <text x="78" y="98" textAnchor="middle" fill="#3B82F6" fontFamily="sans-serif" fontSize="16">🚗</text>
+
+          {/* EV Bay */}
+          <rect x="113" y="58" width="40" height="70" rx="6" fill="#0F241D" stroke="#10B981" strokeOpacity="0.7" />
+          <text x="133" y="75" textAnchor="middle" fill="#6EE7B7" fontFamily="monospace" fontSize="8" fontWeight="bold">EV FAST</text>
+          <text x="133" y="98" textAnchor="middle" fill="#10B981" fontFamily="sans-serif" fontSize="16">⚡</text>
+
+          {/* Reserved Indian Plate Card */}
+          <rect x="168" y="58" width="95" height="70" rx="6" fill="#151A26" stroke="#6366F1" strokeOpacity="0.5" />
+          <rect x="176" y="68" width="79" height="20" rx="3" fill="#000000" stroke="#FACC15" strokeWidth="1" />
+          <text x="215" y="82" textAnchor="middle" fill="#FFFFFF" fontFamily="monospace" fontSize="9" fontWeight="bold">MH 02 AB 1234</text>
+          <text x="215" y="103" textAnchor="middle" fill="#A5B4FC" fontFamily="sans-serif" fontSize="8">OCCUPIED • IST 15:30</text>
+          <text x="215" y="117" textAnchor="middle" fill="#34D399" fontFamily="monospace" fontSize="7.5">FAIR TARIFF: ₹140</text>
+
+          {/* Header Badge */}
+          <rect x="20" y="16" width="170" height="18" rx="4" fill="#0D1627" stroke="#3B82F6" strokeOpacity="0.4" />
+          <text x="28" y="28" fill="#60A5FA" fontFamily="monospace" fontSize="8" fontWeight="bold">PARKCLOUD • SMART PARKING</text>
+          <rect x="204" y="146" width="98" height="18" rx="4" fill="#0F172A" stroke="rgba(255,255,255,0.12)" />
+          <text x="212" y="158" fill="#94A3B8" fontFamily="monospace" fontSize="7.5">AWS AP-SOUTH-1 (MUMBAI)</text>
+        </svg>
+      );
+
+    case "study-mode-launcher":
+      return (
+        <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-studymode">
+          <title id="title-studymode">Study Mode Launcher Workspace Automation Preview</title>
+          <rect width="320" height="180" fill="#0D0F17" />
+          {/* Main workspace container */}
+          <rect x="25" y="38" width="270" height="105" rx="8" fill="#141824" stroke="#8B5CF6" strokeOpacity="0.4" />
+          {/* Profile Bar */}
+          <rect x="35" y="48" width="145" height="18" rx="4" fill="#1F263B" />
+          <text x="43" y="60" fill="#A78BFA" fontFamily="monospace" fontSize="8">● COLLEGE PROFILE • 6 TABS</text>
+          {/* Pomodoro Timer Widget */}
+          <rect x="190" y="48" width="95" height="50" rx="6" fill="#1E1730" stroke="#EC4899" strokeOpacity="0.4" />
+          <circle cx="215" cy="73" r="14" stroke="#EC4899" strokeWidth="2.5" strokeDasharray="60 30" fill="none" />
+          <text x="248" y="70" fill="#F472B6" fontFamily="monospace" fontSize="11" fontWeight="bold">25:00</text>
+          <text x="248" y="82" fill="#94A3B8" fontFamily="sans-serif" fontSize="7">FOCUS MODE</text>
+          {/* Action launcher button */}
+          <rect x="35" y="76" width="145" height="22" rx="5" fill="#7C3AED" />
+          <text x="107" y="90" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontSize="8.5" fontWeight="bold">▶ 1-CLICK LAUNCH WORKSPACE</text>
+          {/* Bottom stats */}
+          <rect x="35" y="108" width="250" height="24" rx="4" fill="#0F131D" />
+          <text x="45" y="123" fill="#38BDF8" fontFamily="monospace" fontSize="7.5">WINDOW SNAPPING</text>
+          <text x="145" y="123" fill="#34D399" fontFamily="monospace" fontSize="7.5">DISTRACTION SHIELD</text>
+          <text x="245" y="123" fill="#FBBF24" fontFamily="monospace" fontSize="7.5">GESTURE MOUSE</text>
+          {/* Top pill */}
+          <rect x="20" y="14" width="155" height="18" rx="4" fill="#161226" stroke="#8B5CF6" strokeOpacity="0.3" />
+          <text x="28" y="26" fill="#C4B5FD" fontFamily="monospace" fontSize="8" fontWeight="bold">WORKSPACE AUTOMATION • PYTHON</text>
+        </svg>
+      );
+
+    case "instapulse":
+      return (
+        <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-instapulse">
+          <title id="title-instapulse">InstaPulse Social Media Experience Preview</title>
+          <rect width="320" height="180" fill="#0A0A0A" />
+          {/* Top Stories Rail */}
+          <circle cx="50" cy="42" r="14" stroke="url(#insta-grad)" strokeWidth="2" fill="#18181B" />
+          <circle cx="85" cy="42" r="14" stroke="url(#insta-grad)" strokeWidth="2" fill="#18181B" />
+          <circle cx="120" cy="42" r="14" stroke="url(#insta-grad)" strokeWidth="2" fill="#18181B" />
+          <circle cx="155" cy="42" r="14" stroke="url(#insta-grad)" strokeWidth="2" fill="#18181B" />
+          <circle cx="190" cy="42" r="14" stroke="#3F3F46" strokeWidth="1.5" fill="#18181B" />
+          <text x="50" y="45" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontSize="10">👤</text>
+          <text x="85" y="45" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontSize="10">🎨</text>
+          <text x="120" y="45" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontSize="10">🚀</text>
+          <text x="155" y="45" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontSize="10">📸</text>
+          {/* Main Feed Card */}
+          <rect x="35" y="65" width="250" height="95" rx="8" fill="#18181B" stroke="#27272A" />
+          <rect x="45" y="74" width="80" height="76" rx="4" fill="#27272A" />
+          <text x="85" y="117" textAnchor="middle" fill="#F43F5E" fontFamily="sans-serif" fontSize="20">♥</text>
+          <text x="135" y="88" fill="#F4F4F5" fontFamily="sans-serif" fontSize="10" fontWeight="bold">bryson.dev</text>
+          <text x="135" y="103" fill="#A1A1AA" fontFamily="sans-serif" fontSize="8">Mumbai, India • 2h ago</text>
+          <text x="135" y="122" fill="#E4E4E7" fontFamily="sans-serif" fontSize="8">Reels • Explore • Instant Direct Chat</text>
+          <rect x="135" y="132" width="70" height="14" rx="3" fill="#27272A" />
+          <text x="142" y="142" fill="#EC4899" fontFamily="monospace" fontSize="7">1.2K LIKES • ZUSTAND</text>
+          {/* Top Tag */}
+          <rect x="20" y="14" width="140" height="16" rx="3" fill="#18181B" stroke="#3F3F46" />
+          <text x="27" y="25" fill="#F43F5E" fontFamily="monospace" fontSize="7.5" fontWeight="bold">INSTAPULSE • REACT 19 SOCIAL</text>
+          <defs>
+            <linearGradient id="insta-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop stopColor="#F59E0B" />
+              <stop offset="0.5" stopColor="#EC4899" />
+              <stop offset="1" stopColor="#8B5CF6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      );
+
+    case "expense-tracker":
+      return (
+        <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-expense">
+          <title id="title-expense">ExpenseTracker Pro Financial Analytics Preview</title>
+          <rect width="320" height="180" fill="#090D14" />
+          {/* Balance card */}
+          <rect x="30" y="38" width="125" height="60" rx="8" fill="#111827" stroke="#10B981" strokeOpacity="0.4" />
+          <text x="42" y="54" fill="#9CA3AF" fontFamily="sans-serif" fontSize="7" textTransform="uppercase">NET LIQUID BALANCE</text>
+          <text x="42" y="75" fill="#34D399" fontFamily="monospace" fontSize="14" fontWeight="bold">₹63,200</text>
+          <text x="42" y="88" fill="#6EE7B7" fontFamily="sans-serif" fontSize="7">SAVINGS RATE: 48%</text>
+
+          {/* Cashflow timeline */}
+          <rect x="165" y="38" width="125" height="60" rx="8" fill="#111827" stroke="#3B82F6" strokeOpacity="0.4" />
+          <text x="175" y="54" fill="#9CA3AF" fontFamily="sans-serif" fontSize="7">ACTIVITY TIMELINE</text>
+          <rect x="175" y="64" width="8" height="24" rx="1" fill="#10B981" />
+          <rect x="187" y="72" width="8" height="16" rx="1" fill="#F43F5E" />
+          <rect x="199" y="60" width="8" height="28" rx="1" fill="#10B981" />
+          <rect x="211" y="68" width="8" height="20" rx="1" fill="#F43F5E" />
+          <rect x="223" y="62" width="8" height="26" rx="1" fill="#10B981" />
+          <rect x="235" y="74" width="8" height="14" rx="1" fill="#F43F5E" />
+
+          {/* Categorical Budget Meters */}
+          <rect x="30" y="108" width="260" height="48" rx="6" fill="#0D131F" stroke="rgba(255,255,255,0.08)" />
+          <text x="40" y="122" fill="#E5E7EB" fontFamily="sans-serif" fontSize="8" fontWeight="bold">HOUSING & RENT: 88%</text>
+          <rect x="40" y="126" width="110" height="4" rx="2" fill="#374151" />
+          <rect x="40" y="126" width="96" height="4" rx="2" fill="#3B82F6" />
+
+          <text x="165" y="122" fill="#E5E7EB" fontFamily="sans-serif" fontSize="8" fontWeight="bold">FOOD & DINING: 64%</text>
+          <rect x="165" y="126" width="115" height="4" rx="2" fill="#374151" />
+          <rect x="165" y="126" width="74" height="4" rx="2" fill="#10B981" />
+
+          <text x="40" y="146" fill="#94A3B8" fontFamily="monospace" fontSize="7">E2E CLIENT-SIDE ENCRYPTION • LOCALSTORAGE</text>
+
+          {/* Pill */}
+          <rect x="20" y="14" width="165" height="18" rx="3" fill="#0E1624" stroke="#10B981" strokeOpacity="0.4" />
+          <text x="28" y="26" fill="#34D399" fontFamily="monospace" fontSize="8" fontWeight="bold">FINTECH • EXPENSETRACKER PRO</text>
+        </svg>
+      );
+
     case "raksha-zone":
       return (
         <svg viewBox="0 0 320 180" className="pcard-svg-preview" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-raksha">
