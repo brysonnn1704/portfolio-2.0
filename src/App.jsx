@@ -28,88 +28,6 @@ import {
 
 const Arrow = () => <span aria-hidden="true" style={{ display: "inline-block" }}>↗</span>;
 
-function HeroOverlay({ onExplore, onContact }) {
-  const [collapsed, setCollapsed] = useState(false);
-
-  return (
-    <aside className={`hero-overlay ${collapsed ? "collapsed" : ""}`} aria-label="Introduction">
-      <div className="hero-header">
-        <div className="hero-badge">
-          <span className="live-dot" />
-          <span>Available for Roles</span>
-        </div>
-        <button
-          className="hero-toggle-btn"
-          onClick={() => setCollapsed((v) => !v)}
-          aria-label={collapsed ? "Expand bio" : "Collapse bio"}
-        >
-          {collapsed ? "Expand" : "Minimize"}
-        </button>
-      </div>
-
-      {!collapsed && (
-        <>
-          <h1 className="hero-title">
-            Bryson <span>Almeida</span>
-          </h1>
-          <div className="hero-role">
-            Computer Engineering @ Fr. CRCE • Cloud & Systems
-          </div>
-          <p className="hero-bio">
-            Diploma distinction (89.47%) in Cloud Computing & Big Data. Architecting scalable full-stack web applications, distributed systems, and real-time developer tools.
-          </p>
-
-          <div className="hero-metrics">
-            <div className="hero-metric-item">
-              <span className="hero-metric-val">89.47%</span>
-              <span className="hero-metric-lbl">Distinction</span>
-            </div>
-            <div className="hero-metric-item">
-              <span className="hero-metric-val">15+</span>
-              <span className="hero-metric-lbl">Projects</span>
-            </div>
-            <div className="hero-metric-item">
-              <span className="hero-metric-val">Cloud</span>
-              <span className="hero-metric-lbl">AWS / Docker</span>
-            </div>
-          </div>
-
-          <div className="hero-actions">
-            <button className="btn btn-p" onClick={onExplore}>
-              Explore Work <Arrow />
-            </button>
-            <button className="btn btn-g" onClick={onContact}>
-              Get In Touch
-            </button>
-          </div>
-
-          <div
-            className="hero-shortcuts"
-            style={{
-              marginTop: "14px",
-              paddingTop: "10px",
-              borderTop: "1px solid var(--border-subtle)",
-              fontSize: "11px",
-              color: "var(--text-dim)",
-              display: "flex",
-              gap: "6px",
-              flexWrap: "wrap",
-              alignItems: "center",
-              fontFamily: "var(--mono)",
-            }}
-          >
-            <span style={{ color: "var(--text-muted)" }}>Keys:</span>
-            <span className="dock-key">1-7</span> Stations
-            <span className="dock-key">V</span> 2D/3D
-            <span className="dock-key">M</span> Audio
-            <span className="dock-key">Esc</span> Close
-          </div>
-        </>
-      )}
-    </aside>
-  );
-}
-
 function BottomDock({ stations, activeId, onSelect }) {
   return (
     <nav className="bottom-dock" aria-label="Workstations quick navigation">
@@ -1254,12 +1172,6 @@ export default function App() {
                   />
                 </Suspense>
               </Canvas>
-
-              {/* Desktop Floating Hero HUD */}
-              <HeroOverlay
-                onExplore={() => openPanel("projects")}
-                onContact={() => openPanel("contact")}
-              />
 
               {/* Workstations Quick Dock */}
               <BottomDock
