@@ -15,8 +15,111 @@ import { ProjectVisual } from "./ProjectVisuals.jsx";
 import { SceneContent, CenterProjector, StationPinsProjector } from "./Scene3D.jsx";
 import { STATION_DATA } from "./stationsData.js";
 import { DoodleCharacter } from "./DoodleCharacter.jsx";
+import {
+  StationIcon,
+  VolumeHighIcon,
+  VolumeXIcon,
+  SearchIcon,
+  CloseIcon,
+  ArrowUpRight,
+  MenuIcon,
+  CheckIcon,
+} from "./Icons.jsx";
 
 const Arrow = () => <span aria-hidden="true" style={{ display: "inline-block" }}>↗</span>;
+
+function HeroOverlay({ onExplore, onContact }) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <aside className={`hero-overlay ${collapsed ? "collapsed" : ""}`} aria-label="Introduction">
+      <div className="hero-header">
+        <div className="hero-badge">
+          <span className="live-dot" />
+          <span>Available for Roles</span>
+        </div>
+        <button
+          className="hero-toggle-btn"
+          onClick={() => setCollapsed((v) => !v)}
+          aria-label={collapsed ? "Expand bio" : "Collapse bio"}
+        >
+          {collapsed ? "Expand" : "Minimize"}
+        </button>
+      </div>
+
+      {!collapsed && (
+        <>
+          <h1 className="hero-title">
+            Bryson <span>Almeida</span>
+          </h1>
+          <div className="hero-role">
+            Computer Engineering @ Fr. CRCE • Cloud & Systems
+          </div>
+          <p className="hero-bio">
+            Diploma distinction (89.47%) in Cloud Computing & Big Data. Architecting scalable full-stack web applications, distributed systems, and real-time developer tools.
+          </p>
+
+          <div className="hero-metrics">
+            <div className="hero-metric-item">
+              <span className="hero-metric-val">89.47%</span>
+              <span className="hero-metric-lbl">Distinction</span>
+            </div>
+            <div className="hero-metric-item">
+              <span className="hero-metric-val">15+</span>
+              <span className="hero-metric-lbl">Projects</span>
+            </div>
+            <div className="hero-metric-item">
+              <span className="hero-metric-val">Cloud</span>
+              <span className="hero-metric-lbl">AWS / Docker</span>
+            </div>
+          </div>
+
+          <div className="hero-actions">
+            <button className="btn btn-p" onClick={onExplore}>
+              Explore Work <Arrow />
+            </button>
+            <button className="btn btn-g" onClick={onContact}>
+              Get In Touch
+            </button>
+          </div>
+        </>
+      )}
+    </aside>
+  );
+}
+
+function BottomDock({ stations, activeId, onSelect }) {
+  return (
+    <nav className="bottom-dock" aria-label="Workstations quick navigation">
+      {stations.map((s, idx) => (
+        <button
+          key={s.id}
+          className={`dock-item ${activeId === s.id ? "active" : ""}`}
+          onClick={() => onSelect(s.id)}
+          aria-label={`Station ${idx + 1}: ${s.label}`}
+        >
+          <span className="dock-key">{idx + 1}</span>
+          <span className="dock-icon">
+            <StationIcon id={s.id} size={13} />
+          </span>
+          <span>{s.label}</span>
+        </button>
+      ))}
+      <div className="dock-sep" />
+      <button
+        className={`dock-item ${activeId === "contact" ? "active" : ""}`}
+        onClick={() => onSelect("contact")}
+        aria-label="Station 7: Contact"
+      >
+        <span className="dock-key">7</span>
+        <span className="dock-icon">
+          <StationIcon id="contact" size={13} />
+        </span>
+        <span>Contact</span>
+      </button>
+    </nav>
+  );
+}
 
 // Custom hooks with derived initial state (zero oxlint warnings)
 function useIsMobile(bp = 768) {
@@ -157,7 +260,7 @@ function PanelWrap({ kicker, title, subtitle, onClose, children }) {
             {subtitle && <div className="panel-sub">{subtitle}</div>}
           </div>
           <button className="panel-close" onClick={onClose} aria-label="Close dialog">
-            ✕
+            <CloseIcon size={16} />
           </button>
         </div>
         {children}
@@ -192,19 +295,28 @@ function ProjectsPanel({ onClose }) {
     >
       <div className="filter-bar">
         <div className="filter-row" role="group" aria-label="Filter projects">
-          {filters.map((f) => (
-            <button
-              key={f}
-              className="filter-pill"
-              aria-pressed={filter === f}
-              onClick={() => setFilter(f)}
-            >
-              {f}
-            </button>
-          ))}
+          {filters.map((f) => {
+            const count =
+              f === "All"
+                ? SELECTED_PROJECTS.length
+                : SELECTED_PROJECTS.filter((p) => p.filter === f).length;
+            return (
+              <button
+                key={f}
+                className="filter-pill"
+                aria-pressed={filter === f}
+                onClick={() => setFilter(f)}
+              >
+                <span>{f}</span>
+                <span className="filter-count">({count})</span>
+              </button>
+            );
+          })}
         </div>
         <div className="search-wrap">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon">
+            <SearchIcon size={14} />
+          </span>
           <input
             type="text"
             className="search-input"
@@ -759,7 +871,9 @@ function ContactPanel({ onClose, onToast }) {
     >
       <div className="contact-grid">
         <div className="contact-card" style={{ cursor: "pointer" }} onClick={handleCopyEmail}>
-          <div className="contact-icon">✉️</div>
+          <div className="contact-icon">
+            <StationIcon id="contact" size={20} />
+          </div>
           <div className="contact-info">
             <b>Email</b>
             <small>{LINKS.email}</small>
@@ -770,7 +884,9 @@ function ContactPanel({ onClose, onToast }) {
         </div>
 
         <a className="contact-card" href={LINKS.github} target="_blank" rel="noreferrer">
-          <div className="contact-icon">🐙</div>
+          <div className="contact-icon">
+            <StationIcon id="github" size={20} />
+          </div>
           <div className="contact-info">
             <b>GitHub</b>
             <small>github.com/brysonnn1704</small>
@@ -781,7 +897,9 @@ function ContactPanel({ onClose, onToast }) {
         </a>
 
         <a className="contact-card" href={LINKS.youtube} target="_blank" rel="noreferrer">
-          <div className="contact-icon">🎥</div>
+          <div className="contact-icon">
+            <StationIcon id="creative" size={20} />
+          </div>
           <div className="contact-info">
             <b>YouTube</b>
             <small>youtube.com/@sauceop8165</small>
@@ -792,7 +910,9 @@ function ContactPanel({ onClose, onToast }) {
         </a>
 
         <a className="contact-card" href="/Bryson_Prakash_Almeida_CV_Final.pdf" target="_blank" rel="noreferrer">
-          <div className="contact-icon">📄</div>
+          <div className="contact-icon">
+            <StationIcon id="resume" size={20} />
+          </div>
           <div className="contact-info">
             <b>Curriculum Vitae</b>
             <small>Bryson_Prakash_Almeida_CV_Final.pdf</small>
@@ -910,12 +1030,12 @@ export default function App() {
   }, [showToast]);
 
   const stations = [
-    { id: "projects", label: "Projects", icon: "💻", n: "01" },
-    { id: "systems", label: "Systems & Cloud", icon: "☁️", n: "02" },
-    { id: "resume", label: "Resume", icon: "📄", n: "03" },
-    { id: "creative", label: "Creative", icon: "🎥", n: "04" },
-    { id: "about", label: "About", icon: "🪪", n: "05" },
-    { id: "github", label: "GitHub", icon: "⚡", n: "06" },
+    { id: "projects", label: "Projects", n: "01" },
+    { id: "systems", label: "Systems & Cloud", n: "02" },
+    { id: "resume", label: "Resume", n: "03" },
+    { id: "creative", label: "Creative", n: "04" },
+    { id: "about", label: "About", n: "05" },
+    { id: "github", label: "GitHub", n: "06" },
   ];
 
   // Keyboard Shortcuts
@@ -971,7 +1091,7 @@ export default function App() {
             aria-label={soundEnabled ? "Mute audio" : "Enable sound"}
             title={soundEnabled ? "Audio ON (press M to mute)" : "Audio OFF (press M to enable)"}
           >
-            {soundEnabled ? "🔊" : "🔇"}
+            {soundEnabled ? <VolumeHighIcon size={16} /> : <VolumeXIcon size={16} />}
           </button>
 
           <a
@@ -988,8 +1108,10 @@ export default function App() {
             onClick={() => setMenu((v) => !v)}
             aria-expanded={menu}
             aria-label="Toggle menu"
+            style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
           >
-            MENU {menu ? "✕" : "≡"}
+            {menu ? <CloseIcon size={14} /> : <MenuIcon size={14} />}
+            <span>MENU</span>
           </button>
         </div>
       </header>
@@ -1033,7 +1155,7 @@ export default function App() {
               {stations.map((s) => (
                 <button key={s.id} className="mobile-station-card" onClick={() => openPanel(s.id)}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: 22 }}>{s.icon}</span>
+                    <StationIcon id={s.id} size={22} />
                     <span className="mono">{s.n}</span>
                   </div>
                   <h4>{s.label}</h4>
@@ -1082,6 +1204,19 @@ export default function App() {
                 </Suspense>
               </Canvas>
 
+              {/* Desktop Floating Hero HUD */}
+              <HeroOverlay
+                onExplore={() => openPanel("projects")}
+                onContact={() => openPanel("contact")}
+              />
+
+              {/* Workstations Quick Dock */}
+              <BottomDock
+                stations={stations}
+                activeId={panel}
+                onSelect={openPanel}
+              />
+
               {/* Cute, Handsome 2D Doodle Character Anchored at 3D Desk Center */}
               <DoodleCharacter
                 posRef={doodlePosRef}
@@ -1110,7 +1245,10 @@ export default function App() {
                   >
                     <span className="pin-dot" />
                     <span className="pin-num">{s.n}</span>
-                    <span className="pin-label">{s.icon} {s.label}</span>
+                    <span className="pin-label">
+                      <StationIcon id={s.id} size={12} />
+                      <span>{s.label}</span>
+                    </span>
                     <span className="pin-arrow">↗</span>
                   </button>
                 ))}
@@ -1151,7 +1289,10 @@ export default function App() {
                   openPanel(s.id);
                 }}
               >
-                <span>{s.icon} {s.n} — {s.label}</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <StationIcon id={s.id} size={15} />
+                  <span>{s.n} — {s.label}</span>
+                </span>
                 <Arrow />
               </button>
             ))}
@@ -1161,15 +1302,24 @@ export default function App() {
                 openPanel("contact");
               }}
             >
-              <span>✉️ 07 — Contact</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <StationIcon id="contact" size={15} />
+                <span>07 — Contact</span>
+              </span>
               <Arrow />
             </button>
             <a href={LINKS.github} target="_blank" rel="noreferrer">
-              <span>GitHub Profile</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <StationIcon id="github" size={15} />
+                <span>GitHub Profile</span>
+              </span>
               <Arrow />
             </a>
             <a href={LINKS.youtube} target="_blank" rel="noreferrer">
-              <span>YouTube Channel</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <StationIcon id="creative" size={15} />
+                <span>YouTube Channel</span>
+              </span>
               <Arrow />
             </a>
             <button
@@ -1186,7 +1336,7 @@ export default function App() {
       {/* Toast Notification */}
       {toastMessage && (
         <div className="toast" role="status">
-          <span>✨</span> {toastMessage}
+          <CheckIcon size={14} /> <span>{toastMessage}</span>
         </div>
       )}
 

@@ -115,7 +115,7 @@ function InteractiveStation({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -position[1] - 0.448, 0]}>
         <ringGeometry args={[0.32, 0.38, 32]} />
         <meshBasicMaterial
-          color={isHovered ? "#F2E900" : "#38BDF8"}
+          color={isHovered ? "#10B981" : "#38BDF8"}
           transparent
           opacity={isHovered ? 0.45 : 0.14}
         />
@@ -125,7 +125,7 @@ function InteractiveStation({
       {isHovered && (
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -position[1] - 0.447, 0]}>
           <ringGeometry args={[0.38, 0.82, 36]} />
-          <meshBasicMaterial color="#F2E900" transparent opacity={0.25} />
+          <meshBasicMaterial color="#10B981" transparent opacity={0.25} />
         </mesh>
       )}
     </group>
@@ -155,7 +155,7 @@ function Workstation({ hovered }) {
         <planeGeometry args={[1.26, 0.69]} />
         <meshStandardMaterial
           color={hovered ? "#0B1522" : "#070E17"}
-          emissive={hovered ? "#F2E900" : "#38BDF8"}
+          emissive={hovered ? "#10B981" : "#38BDF8"}
           emissiveIntensity={hovered ? 0.22 : 0.12}
           roughness={0.2}
         />
@@ -177,7 +177,7 @@ function Workstation({ hovered }) {
       {[0, 1, 2, 3, 4, 5, 6].map((i) => (
         <mesh key={i} position={[-0.28 + (i % 3) * 0.08, 0.52 - i * 0.055, 0.031]}>
           <planeGeometry args={[0.42 + (i % 2) * 0.2, 0.022]} />
-          <meshBasicMaterial color={i % 2 === 0 ? (hovered ? "#F2E900" : "#38BDF8") : "#94A3B8"} transparent opacity={0.8} />
+          <meshBasicMaterial color={i % 2 === 0 ? (hovered ? "#10B981" : "#38BDF8") : "#94A3B8"} transparent opacity={0.8} />
         </mesh>
       ))}
       {/* Mechanical Keyboard on Desk */}
@@ -227,7 +227,7 @@ function ServerRack({ hovered }) {
           </mesh>
           <mesh position={[0.26, 0.03, 0.01]}>
             <circleGeometry args={[0.014, 16]} />
-            <meshBasicMaterial color={hovered ? "#F2E900" : "#F59E0B"} />
+            <meshBasicMaterial color={hovered ? "#10B981" : "#F59E0B"} />
           </mesh>
           <mesh position={[0.3, 0.03, 0.01]}>
             <circleGeometry args={[0.014, 16]} />
@@ -244,8 +244,8 @@ function ServerRack({ hovered }) {
       <mesh position={[0, 0.63, 0.22]}>
         <boxGeometry args={[0.76, 0.025, 0.05]} />
         <meshStandardMaterial
-          color={hovered ? "#F2E900" : "#38BDF8"}
-          emissive={hovered ? "#F2E900" : "#38BDF8"}
+          color={hovered ? "#10B981" : "#38BDF8"}
+          emissive={hovered ? "#10B981" : "#38BDF8"}
           emissiveIntensity={hovered ? 0.75 : 0.35}
         />
       </mesh>
@@ -269,7 +269,7 @@ function TechnicalJournal({ hovered }) {
       </mesh>
       <mesh position={[0.01, 0.054, -0.32]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.64, 0.04]} />
-        <meshBasicMaterial color={hovered ? "#F2E900" : "#1E293B"} />
+        <meshBasicMaterial color={hovered ? "#10B981" : "#1E293B"} />
       </mesh>
       {[0, 1, 2, 3, 4].map((i) => (
         <mesh key={i} position={[-0.08, 0.054, -0.2 + i * 0.1]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -280,15 +280,15 @@ function TechnicalJournal({ hovered }) {
       <mesh position={[-0.34, 0.055, 0.1]} rotation={[-Math.PI / 2, 0, 0.1]}>
         <planeGeometry args={[0.05, 0.9]} />
         <meshStandardMaterial
-          color={hovered ? "#F2E900" : "#EAB308"}
-          emissive={hovered ? "#F2E900" : "#000"}
+          color={hovered ? "#10B981" : "#EAB308"}
+          emissive={hovered ? "#10B981" : "#000"}
           emissiveIntensity={hovered ? 0.35 : 0}
         />
       </mesh>
       <group position={[0.55, 0.02, 0]} rotation={[0, 0, -Math.PI / 2]}>
         <mesh castShadow>
           <cylinderGeometry args={[0.022, 0.022, 0.95, 20]} />
-          <meshStandardMaterial color={hovered ? "#F2E900" : "#475569"} metalness={0.85} roughness={0.2} />
+          <meshStandardMaterial color={hovered ? "#10B981" : "#475569"} metalness={0.85} roughness={0.2} />
         </mesh>
         <mesh position={[0, 0.48, 0]}>
           <coneGeometry args={[0.022, 0.08, 20]} />
@@ -320,8 +320,8 @@ function CinemaCamera({ hovered }) {
       <mesh position={[0, 0.1, 0.44]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.16, 0.16, 0.02, 32]} />
         <meshStandardMaterial
-          color={hovered ? "#F2E900" : "#38BDF8"}
-          emissive={hovered ? "#F2E900" : "#0284C7"}
+          color={hovered ? "#10B981" : "#38BDF8"}
+          emissive={hovered ? "#10B981" : "#0284C7"}
           emissiveIntensity={hovered ? 0.45 : 0.25}
           roughness={0.05}
           metalness={0.9}
@@ -332,7 +332,7 @@ function CinemaCamera({ hovered }) {
       </RoundedBox>
       <mesh position={[0.28, 0.34, 0.1]}>
         <cylinderGeometry args={[0.04, 0.04, 0.03, 20]} />
-        <meshStandardMaterial color={hovered ? "#F2E900" : "#E2E8F0"} metalness={0.9} roughness={0.1} />
+        <meshStandardMaterial color={hovered ? "#10B981" : "#E2E8F0"} metalness={0.9} roughness={0.1} />
       </mesh>
       <mesh position={[-0.24, 0.34, 0]}>
         <cylinderGeometry args={[0.06, 0.06, 0.03, 24]} />
@@ -364,7 +364,7 @@ function EngineerBadge({ hovered }) {
       </mesh>
       <mesh position={[0, 0.018, -0.2]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.74, 0.06]} />
-        <meshBasicMaterial color={hovered ? "#F2E900" : "#38BDF8"} />
+        <meshBasicMaterial color={hovered ? "#10B981" : "#38BDF8"} />
       </mesh>
       <mesh position={[-0.22, 0.018, 0.02]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.22, 0.26]} />
@@ -372,7 +372,7 @@ function EngineerBadge({ hovered }) {
       </mesh>
       <mesh position={[-0.22, 0.019, 0.02]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.07, 24]} />
-        <meshBasicMaterial color={hovered ? "#F2E900" : "#64748B"} />
+        <meshBasicMaterial color={hovered ? "#10B981" : "#64748B"} />
       </mesh>
       <mesh position={[0.06, 0.018, -0.06]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.09, 0.07]} />
@@ -408,14 +408,14 @@ function CyberTerminal({ hovered }) {
           <planeGeometry args={[0.82, 0.44]} />
           <meshStandardMaterial
             color="#050B10"
-            emissive={hovered ? "#F2E900" : "#10B981"}
+            emissive={hovered ? "#10B981" : "#10B981"}
             emissiveIntensity={hovered ? 0.35 : 0.22}
             roughness={0.15}
           />
         </mesh>
         <mesh position={[-0.12, 0.12, 0.025]}>
           <planeGeometry args={[0.5, 0.022]} />
-          <meshBasicMaterial color={hovered ? "#F2E900" : "#34D399"} />
+          <meshBasicMaterial color={hovered ? "#10B981" : "#34D399"} />
         </mesh>
         <mesh position={[-0.04, 0.06, 0.025]}>
           <planeGeometry args={[0.66, 0.022]} />
@@ -423,7 +423,7 @@ function CyberTerminal({ hovered }) {
         </mesh>
         <mesh position={[-0.18, 0, 0.025]}>
           <planeGeometry args={[0.38, 0.022]} />
-          <meshBasicMaterial color={hovered ? "#F2E900" : "#34D399"} />
+          <meshBasicMaterial color={hovered ? "#10B981" : "#34D399"} />
         </mesh>
         <mesh position={[-0.08, -0.06, 0.025]}>
           <planeGeometry args={[0.58, 0.022]} />
@@ -500,7 +500,7 @@ export function SceneContent({
       {/* Outer Desk Accent Rim */}
       <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[4.12, 4.18, 64]} />
-        <meshBasicMaterial color="#F2E900" transparent opacity={0.22} />
+        <meshBasicMaterial color="#10B981" transparent opacity={0.22} />
       </mesh>
       {/* Precision Uniform Orbit Guideline at R = 2.15 (Equal radial spacing across all 6 stations) */}
       <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -512,14 +512,14 @@ export function SceneContent({
       <mesh position={[0, -0.448, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.34, 0.40, 36]} />
         <meshBasicMaterial
-          color={hovered ? "#F2E900" : "#38BDF8"}
+          color={hovered ? "#10B981" : "#38BDF8"}
           transparent
           opacity={hovered ? 0.45 : 0.2}
         />
       </mesh>
 
       {/* Ambient floating dust particles */}
-      <Sparkles count={42} scale={14} size={2.2} speed={0.25} color="#F2E900" opacity={0.3} />
+      <Sparkles count={42} scale={14} size={2.2} speed={0.25} color="#10B981" opacity={0.3} />
 
       {/* 6 Stations placed at strictly uniform distance (Radius = 2.15) with 60-degree radial symmetry */}
       {/* 01: Workstation -> Projects (Rear Left) */}
@@ -530,7 +530,6 @@ export function SceneContent({
         pinOffset={0.96}
         hitboxSize={[1.8, 1.4, 1.4]}
         label="Projects"
-        icon="💻"
         n="01"
         hovered={hovered}
         setHovered={setHovered}
@@ -548,7 +547,6 @@ export function SceneContent({
         pinOffset={1.05}
         hitboxSize={[1.6, 1.5, 1.4]}
         label="Systems & Cloud"
-        icon="☁️"
         n="02"
         hovered={hovered}
         setHovered={setHovered}
@@ -566,7 +564,6 @@ export function SceneContent({
         pinOffset={0.82}
         hitboxSize={[1.6, 1.2, 1.5]}
         label="Resume"
-        icon="📄"
         n="03"
         hovered={hovered}
         setHovered={setHovered}
@@ -584,7 +581,6 @@ export function SceneContent({
         pinOffset={0.82}
         hitboxSize={[1.5, 1.3, 1.4]}
         label="Creative"
-        icon="🎥"
         n="04"
         hovered={hovered}
         setHovered={setHovered}
@@ -602,7 +598,6 @@ export function SceneContent({
         pinOffset={-0.04}
         hitboxSize={[1.5, 1.1, 1.4]}
         label="About"
-        icon="🪪"
         n="05"
         hovered={hovered}
         setHovered={setHovered}
@@ -620,7 +615,6 @@ export function SceneContent({
         pinOffset={0.82}
         hitboxSize={[1.6, 1.3, 1.4]}
         label="GitHub"
-        icon="⚡"
         n="06"
         hovered={hovered}
         setHovered={setHovered}

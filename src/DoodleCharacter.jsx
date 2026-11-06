@@ -3,12 +3,12 @@ import "./DoodleCharacter.css";
 
 // Station screen directions for pointing and looking
 const STATION_DIRECTIONS = {
-  projects: { x: -180, y: -80, arm: "left", bubble: "Selected Projects! 💻" },
-  systems: { x: 0, y: -200, arm: "left", bubble: "Cloud & Systems! ☁️" },
-  resume: { x: 180, y: -80, arm: "right", bubble: "Curriculum Vitae! 📄" },
-  creative: { x: 160, y: 100, arm: "right", bubble: "Video & Media! 🎥" },
-  about: { x: 0, y: 160, arm: "left", bubble: "About Bryson! 🪪" },
-  github: { x: -160, y: 100, arm: "left", bubble: "Live Repositories! ⚡" },
+  projects: { x: -180, y: -80, arm: "left", bubble: "Featured Projects" },
+  systems: { x: 0, y: -200, arm: "left", bubble: "Cloud & Systems" },
+  resume: { x: 180, y: -80, arm: "right", bubble: "Curriculum Vitae" },
+  creative: { x: 160, y: 100, arm: "right", bubble: "Creative & Media" },
+  about: { x: 0, y: 160, arm: "left", bubble: "About & Education" },
+  github: { x: -160, y: 100, arm: "left", bubble: "GitHub Explorer" },
 };
 
 export function DoodleCharacter({
@@ -274,8 +274,8 @@ export function DoodleCharacter({
       {/* Speech Bubble Doodle */}
       <div className="doodle-speech-wrap" ref={speechWrapRef}>
         <div className="doodle-speech-bubble">
-          <span>💬</span>
-          <span ref={speechTextRef}>Hey! Explore my desk ✨</span>
+          <span className="live-dot" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 6px var(--accent)" }} />
+          <span ref={speechTextRef}>Hey, explore my workstation</span>
         </div>
       </div>
 
