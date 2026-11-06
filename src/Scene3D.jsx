@@ -65,7 +65,8 @@ function InteractiveStation({
   id,
   position,
   rotation = [0, 0, 0],
-  hitboxSize = [1.6, 1.4, 1.4],
+  colliderCenter = [0, 0.35, 0],
+  colliderArgs = [1.0, 0.8, 0.8],
   hovered,
   setHovered,
   onPick,
@@ -94,25 +95,31 @@ function InteractiveStation({
   };
 
   return (
-    <group
-      position={position}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
-      onClick={handleClick}
-    >
-      {/* Generous invisible hitbox so clicking anywhere near the station triggers cleanly */}
-      <mesh visible={false} position={[0, 0.4, 0]}>
-        <boxGeometry args={hitboxSize} />
-        <meshBasicMaterial transparent opacity={0} />
+    <group position={position}>
+      {/* Precision Calibrated Raycast Collider: receives all pointer and touch interactions exclusively */}
+      <mesh
+        position={colliderCenter}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+        onClick={handleClick}
+        onPointerDown={(e) => e.stopPropagation()}
+        onPointerUp={(e) => e.stopPropagation()}
+      >
+        <boxGeometry args={colliderArgs} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      {/* Main 3D Model with clean orientation facing inwards */}
-      <group rotation={rotation} scale={isHovered ? 1.04 : 1}>
+      {/* Main 3D Model (pure visual display, raycasting disabled to prevent accidental cross-talk) */}
+      <group rotation={rotation} scale={isHovered ? 1.04 : 1} raycast={() => null}>
         {children}
       </group>
 
-      {/* Uniform Ground Pedestal Ring on desk */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -position[1] - 0.448, 0]}>
+      {/* Uniform Ground Pedestal Ring on desk (pure visual) */}
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -position[1] - 0.448, 0]}
+        raycast={() => null}
+      >
         <ringGeometry args={[0.32, 0.38, 32]} />
         <meshBasicMaterial
           color={isHovered ? "#10B981" : "#38BDF8"}
@@ -121,9 +128,13 @@ function InteractiveStation({
         />
       </mesh>
 
-      {/* Ground light aura on hover */}
+      {/* Ground light aura on hover (pure visual) */}
       {isHovered && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -position[1] - 0.447, 0]}>
+        <mesh
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, -position[1] - 0.447, 0]}
+          raycast={() => null}
+        >
           <ringGeometry args={[0.38, 0.82, 36]} />
           <meshBasicMaterial color="#10B981" transparent opacity={0.25} />
         </mesh>
@@ -530,8 +541,8 @@ export function SceneContent({
         id="projects"
         position={[-1.86, 0.18, -1.08]}
         rotation={[0, 0.52, 0]}
-        pinOffset={0.96}
-        hitboxSize={[1.8, 1.4, 1.4]}
+        colliderCenter={[0, 0.35, 0]}
+        colliderArgs={[1.35, 0.85, 0.45]}
         label="Projects"
         n="01"
         hovered={hovered}
@@ -547,8 +558,8 @@ export function SceneContent({
         id="systems"
         position={[0, 0.22, -2.15]}
         rotation={[0, 0, 0]}
-        pinOffset={1.05}
-        hitboxSize={[1.6, 1.5, 1.4]}
+        colliderCenter={[0, 0.50, 0]}
+        colliderArgs={[0.85, 1.25, 0.65]}
         label="Systems & Cloud"
         n="02"
         hovered={hovered}
@@ -564,8 +575,8 @@ export function SceneContent({
         id="resume"
         position={[1.86, 0.08, -1.08]}
         rotation={[0, -0.52, 0]}
-        pinOffset={0.82}
-        hitboxSize={[1.6, 1.2, 1.5]}
+        colliderCenter={[0, 0.10, 0]}
+        colliderArgs={[0.95, 0.25, 1.10]}
         label="Resume"
         n="03"
         hovered={hovered}
@@ -581,8 +592,8 @@ export function SceneContent({
         id="creative"
         position={[1.86, 0.18, 1.08]}
         rotation={[0, -0.4, 0]}
-        pinOffset={0.82}
-        hitboxSize={[1.5, 1.3, 1.4]}
+        colliderCenter={[0, 0.20, 0.05]}
+        colliderArgs={[0.70, 0.50, 0.60]}
         label="Creative"
         n="04"
         hovered={hovered}
@@ -598,8 +609,8 @@ export function SceneContent({
         id="about"
         position={[0, 0.04, 2.22]}
         rotation={[0, 0, 0]}
-        pinOffset={-0.04}
-        hitboxSize={[1.5, 1.1, 1.4]}
+        colliderCenter={[0, 0.08, 0]}
+        colliderArgs={[0.75, 0.18, 0.75]}
         label="About"
         n="05"
         hovered={hovered}
@@ -615,8 +626,8 @@ export function SceneContent({
         id="github"
         position={[-1.86, 0.1, 1.08]}
         rotation={[0, 0.4, 0]}
-        pinOffset={0.82}
-        hitboxSize={[1.6, 1.3, 1.4]}
+        colliderCenter={[0, 0.18, 0]}
+        colliderArgs={[0.75, 0.45, 0.65]}
         label="GitHub"
         n="06"
         hovered={hovered}

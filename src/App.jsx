@@ -1142,6 +1142,7 @@ export default function App() {
                 dpr={[1, 1.75]}
                 gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
                 shadows
+                onPointerMissed={() => setHovered(null)}
                 onCreated={({ gl }) => {
                   gl.setClearColor("#070A0F");
                 }}

@@ -235,7 +235,6 @@ button {
   background: rgba(22, 30, 42, 0.98);
   border-color: var(--accent);
   box-shadow: 0 0 24px var(--accent-glow), var(--shadow-lg);
-  transform: none; /* Let projector manage 3D transform */
 }
 
 /* 3D Floating Interactive Pin Badges */
@@ -256,8 +255,7 @@ button {
   cursor: pointer;
   white-space: nowrap;
   box-shadow: var(--shadow-md);
-  transition: transform var(--duration-fast) var(--ease-spring),
-              border-color var(--duration-fast) ease,
+  transition: border-color var(--duration-fast) ease,
               background var(--duration-fast) ease,
               box-shadow var(--duration-fast) ease;
   user-select: none;
@@ -266,7 +264,6 @@ button {
   background: rgba(22, 30, 42, 0.98);
   border-color: var(--accent);
   box-shadow: 0 0 24px var(--accent-glow), var(--shadow-lg);
-  transform: translateY(-2px) scale(1.05);
 }
 .pin-tag .pin-dot {
   width: 6px;
