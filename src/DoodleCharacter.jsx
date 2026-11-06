@@ -3,12 +3,12 @@ import "./DoodleCharacter.css";
 
 // Station screen directions for pointing and looking
 const STATION_DIRECTIONS = {
-  projects: { x: -180, y: -80, arm: "left", bubble: "Featured Projects" },
-  systems: { x: 0, y: -200, arm: "left", bubble: "Cloud & Systems" },
-  resume: { x: 180, y: -80, arm: "right", bubble: "Curriculum Vitae" },
-  creative: { x: 160, y: 100, arm: "right", bubble: "Creative & Media" },
-  about: { x: 0, y: 160, arm: "left", bubble: "About & Education" },
-  github: { x: -160, y: 100, arm: "left", bubble: "GitHub Explorer" },
+  projects: { x: -180, y: -80, arm: "left", angle: -48, bubble: "Featured Projects" },
+  systems: { x: 0, y: -200, arm: "left", angle: -65, bubble: "Cloud & Systems" },
+  resume: { x: 180, y: -80, arm: "right", angle: 48, bubble: "Curriculum Vitae" },
+  creative: { x: 160, y: 100, arm: "right", angle: 28, bubble: "Creative & Media" },
+  about: { x: 0, y: 160, arm: "left", angle: 12, bubble: "About & Education" },
+  github: { x: -160, y: 100, arm: "left", angle: -24, bubble: "GitHub Explorer" },
 };
 
 export function DoodleCharacter({
@@ -52,6 +52,7 @@ export function DoodleCharacter({
     pointingAngle: 0,
     pointingBlend: 0,
     pointingTimer: 0,
+    isHoverPointing: false,
     isBlinking: false,
     blinkTimer: 3.5,
     idleTimer: 0,
@@ -72,18 +73,22 @@ export function DoodleCharacter({
 
       // Trigger arm pointing
       animState.current.pointingArm = info.arm;
-      animState.current.pointingAngle = Math.atan2(info.y, info.x) * (180 / Math.PI);
-      animState.current.pointingTimer = 1.25;
-      animState.current.pointingBlend = 0;
+      animState.current.pointingAngle = info.angle;
+      animState.current.pointingTimer = 1.5;
     }
   }, [clickedStation]);
 
   // Handle station hover reactions
   useEffect(() => {
     if (hovered && STATION_DIRECTIONS[hovered]) {
-      if (speechTextRef.current) speechTextRef.current.innerText = STATION_DIRECTIONS[hovered].bubble;
+      const info = STATION_DIRECTIONS[hovered];
+      if (speechTextRef.current) speechTextRef.current.innerText = info.bubble;
       if (speechWrapRef.current) speechWrapRef.current.classList.add("visible");
+      animState.current.pointingArm = info.arm;
+      animState.current.pointingAngle = info.angle;
+      animState.current.isHoverPointing = true;
     } else {
+      animState.current.isHoverPointing = false;
       if (bubbleTimeoutRef.current) clearTimeout(bubbleTimeoutRef.current);
       bubbleTimeoutRef.current = setTimeout(() => {
         if (speechWrapRef.current) speechWrapRef.current.classList.remove("visible");
@@ -115,8 +120,8 @@ export function DoodleCharacter({
       const s = animState.current;
       s.idleTimer += delta;
 
-      // Update 2D screen anchoring from 3D camera projection
-      if (containerRef.current && posRef?.current) {
+      // Update 2D screen anchoring from 3D camera projection (only in 3D desk view)
+      if (containerRef.current && posRef?.current && !isStatic) {
         const { x, y, scale } = posRef.current;
         containerRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -90%) scale(${scale})`;
       }
@@ -151,7 +156,7 @@ export function DoodleCharacter({
         rightPupilRef.current.setAttribute("transform", `translate(${s.currPupilX}, ${s.currPupilY})`);
       }
 
-      // 2. Head Tilt & Rotation
+      // 2. Head Tilt & Rotation (both horizontal and vertical tracking)
       const targetHeadRot = Math.max(-14, Math.min(14, targetDx / 32));
       const targetHeadTilt = Math.max(-10, Math.min(10, targetDy / 42));
       s.currHeadRot += (targetHeadRot - s.currHeadRot) * 0.14;
@@ -160,7 +165,7 @@ export function DoodleCharacter({
       if (headGroupRef.current) {
         headGroupRef.current.setAttribute(
           "transform",
-          `translate(140, 120) rotate(${s.currHeadRot}) translate(-140, -120)`
+          `translate(140, 120) translate(0, ${s.currHeadTilt * 0.35}) rotate(${s.currHeadRot}) translate(-140, -120)`
         );
       }
 
@@ -196,28 +201,27 @@ export function DoodleCharacter({
       }
 
       // 6. Arm Pointing IK & Natural Idle Stance
+      const isPointing = s.isHoverPointing || s.pointingTimer > 0;
+      if (isPointing) {
+        s.pointingBlend += (1.0 - s.pointingBlend) * 0.16;
+      } else {
+        s.pointingBlend += (0.0 - s.pointingBlend) * 0.14;
+      }
+
       if (s.pointingTimer > 0) {
         s.pointingTimer -= delta;
-        if (s.pointingTimer > 0.25) {
-          s.pointingBlend += (1.0 - s.pointingBlend) * 0.2;
-        } else {
-          s.pointingBlend += (0.0 - s.pointingBlend) * 0.16;
-        }
-      } else {
-        s.pointingBlend += (0.0 - s.pointingBlend) * 0.16;
       }
 
       // Left Arm
       if (leftArmRef.current) {
         if (s.pointingArm === "left" && s.pointingBlend > 0.01) {
-          const targetArmAngle = s.pointingAngle - 180;
-          const armRot = THREE_lerp(0, targetArmAngle, s.pointingBlend);
+          const armRot = THREE_lerp(0, s.pointingAngle, s.pointingBlend);
           leftArmRef.current.setAttribute(
             "transform",
             `translate(96, 162) rotate(${armRot}) translate(-96, -162)`
           );
         } else {
-          const idleArm = !reducedMotion ? Math.sin(now * 0.002) * 3 : 0;
+          const idleArm = !reducedMotion ? Math.sin(now * 0.002) * 2.5 : 0;
           leftArmRef.current.setAttribute(
             "transform",
             `translate(96, 162) rotate(${idleArm}) translate(-96, -162)`
@@ -234,7 +238,7 @@ export function DoodleCharacter({
             `translate(184, 162) rotate(${armRot}) translate(-184, -162)`
           );
         } else {
-          const idleArm = !reducedMotion ? -Math.sin(now * 0.002) * 3 : 0;
+          const idleArm = !reducedMotion ? -Math.sin(now * 0.002) * 2.5 : 0;
           rightArmRef.current.setAttribute(
             "transform",
             `translate(184, 162) rotate(${idleArm}) translate(-184, -162)`
@@ -252,10 +256,10 @@ export function DoodleCharacter({
         }, 130);
       }
       if (eyelidsRef.current) {
-        eyelidsRef.current.style.opacity = s.isBlinking ? "1" : "0";
+        eyelidsRef.current.style.opacity = s.isBlinking ? "1" : hovered ? "0.15" : "0";
       }
 
-      // 8. Glowing Yellow Foot Aura Pulse
+      // 8. Glowing Foot Aura Pulse
       if (auraRef.current) {
         const auraPulse = 1.0 + Math.sin(now * 0.004) * (hovered ? 0.12 : 0.05);
         auraRef.current.setAttribute(
@@ -267,7 +271,7 @@ export function DoodleCharacter({
 
     reqId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(reqId);
-  }, [hovered, reducedMotion, posRef]);
+  }, [hovered, reducedMotion, posRef, isStatic]);
 
   return (
     <div className={`doodle-container ${isStatic ? "static" : ""}`} ref={containerRef}>
@@ -340,7 +344,7 @@ export function DoodleCharacter({
           rx="52"
           ry="14"
           fill="none"
-          stroke={hovered ? "#F2E900" : "#38BDF8"}
+          stroke={hovered ? "#10B981" : "#38BDF8"}
           strokeWidth="3.5"
           strokeDasharray="6 4"
           opacity={hovered ? "0.9" : "0.45"}

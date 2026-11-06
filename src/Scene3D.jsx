@@ -449,6 +449,9 @@ export function SceneContent({
 }) {
   return (
     <>
+      {/* Deep Cosmic Fog to seamlessly blend floor plane into space */}
+      <fog attach="fog" args={["#070A0F", 10, 30]} />
+
       {/* Space & Cosmic Atmosphere Effects */}
       <SpaceAtmosphere reducedMotion={reducedMotion} />
 
@@ -463,31 +466,31 @@ export function SceneContent({
         shadow-bias={-0.0001}
       />
       <directionalLight position={[-4.5, 4.5, -2.5]} intensity={1.5} color="#93C5FD" />
-      <directionalLight position={[0, 5, -4]} intensity={1.0} color="#FDE047" />
+      <directionalLight position={[0, 5, -4]} intensity={1.0} color="#10B981" />
       <pointLight position={[0, 3.2, 0.5]} intensity={1.2} color="#FFFBEB" distance={12} decay={2} />
       <pointLight position={[-2.4, 2.0, 1.8]} intensity={0.9} color="#67E8F9" distance={8} decay={2} />
-      <pointLight position={[2.5, 1.8, 1.2]} intensity={0.85} color="#FBBF24" distance={8} decay={2} />
+      <pointLight position={[2.5, 1.8, 1.2]} intensity={0.85} color="#38BDF8" distance={8} decay={2} />
 
-      {/* Stylized Golden Character Rim & Accent Light */}
-      <pointLight position={[0, 1.8, -1.2]} intensity={1.5} color="#FDE047" distance={5} decay={2} />
+      {/* Character Subtle Emerald & Cyan Rim Lights */}
+      <pointLight position={[0, 1.8, -1.2]} intensity={1.2} color="#34D399" distance={5} decay={2} />
       <pointLight position={[0, 0.8, 1.4]} intensity={0.8} color="#38BDF8" distance={4} decay={2} />
 
-      {/* Ground plane & subtle grid */}
+      {/* Expansive Ground Plane seamlessly blending into fog */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
-        <planeGeometry args={[26, 26]} />
-        <meshStandardMaterial color="#0B1017" roughness={0.85} metalness={0.15} />
+        <planeGeometry args={[60, 60]} />
+        <meshStandardMaterial color="#080C13" roughness={0.9} metalness={0.1} />
       </mesh>
       <Grid
         position={[0, -0.49, 0]}
-        args={[26, 26]}
-        cellSize={0.65}
-        cellThickness={0.6}
-        sectionSize={3.25}
-        sectionThickness={1.1}
-        sectionColor="#1E293B"
-        cellColor="#111827"
-        fadeDistance={14}
-        fadeStrength={1.2}
+        args={[60, 60]}
+        cellSize={0.75}
+        cellThickness={0.5}
+        sectionSize={3.75}
+        sectionThickness={0.9}
+        sectionColor="#151D2A"
+        cellColor="#0B1017"
+        fadeDistance={18}
+        fadeStrength={1.4}
         infiniteGrid
       />
       <ContactShadows position={[0, -0.48, 0]} opacity={0.45} scale={13} blur={2.4} far={4.5} />

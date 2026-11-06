@@ -84,9 +84,9 @@ function CosmicDust({ count = 160 }) {
       <pointsMaterial
         size={0.065}
         sizeAttenuation
-        color="#FDE047"
+        color="#34D399"
         transparent
-        opacity={0.45}
+        opacity={0.4}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -151,7 +151,7 @@ function ShootingStar() {
       </mesh>
       <mesh>
         <sphereGeometry args={[0.16, 16, 16]} />
-        <meshBasicMaterial color="#FDE047" transparent opacity={0.6} />
+        <meshBasicMaterial color="#38BDF8" transparent opacity={0.65} />
       </mesh>
     </group>
   );

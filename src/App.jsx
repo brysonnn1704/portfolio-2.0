@@ -82,6 +82,28 @@ function HeroOverlay({ onExplore, onContact }) {
               Get In Touch
             </button>
           </div>
+
+          <div
+            className="hero-shortcuts"
+            style={{
+              marginTop: "14px",
+              paddingTop: "10px",
+              borderTop: "1px solid var(--border-subtle)",
+              fontSize: "11px",
+              color: "var(--text-dim)",
+              display: "flex",
+              gap: "6px",
+              flexWrap: "wrap",
+              alignItems: "center",
+              fontFamily: "var(--mono)",
+            }}
+          >
+            <span style={{ color: "var(--text-muted)" }}>Keys:</span>
+            <span className="dock-key">1-7</span> Stations
+            <span className="dock-key">V</span> 2D/3D
+            <span className="dock-key">M</span> Audio
+            <span className="dock-key">Esc</span> Close
+          </div>
         </>
       )}
     </aside>
@@ -97,6 +119,8 @@ function BottomDock({ stations, activeId, onSelect }) {
           className={`dock-item ${activeId === s.id ? "active" : ""}`}
           onClick={() => onSelect(s.id)}
           aria-label={`Station ${idx + 1}: ${s.label}`}
+          title={`Press ${idx + 1} to open ${s.label}`}
+          aria-keyshortcuts={`${idx + 1}`}
         >
           <span className="dock-key">{idx + 1}</span>
           <span className="dock-icon">
@@ -110,6 +134,8 @@ function BottomDock({ stations, activeId, onSelect }) {
         className={`dock-item ${activeId === "contact" ? "active" : ""}`}
         onClick={() => onSelect("contact")}
         aria-label="Station 7: Contact"
+        title="Press 7 to open Contact"
+        aria-keyshortcuts="7"
       >
         <span className="dock-key">7</span>
         <span className="dock-icon">
@@ -1029,6 +1055,14 @@ export default function App() {
     });
   }, [showToast]);
 
+  const toggleViewMode = useCallback(() => {
+    setForceMobileMode((prev) => {
+      const next = !prev;
+      showToast(next ? "Switched to Accessible 2D Cards View" : "Switched to 3D Interactive Room");
+      return next;
+    });
+  }, [showToast]);
+
   const stations = [
     { id: "projects", label: "Projects", n: "01" },
     { id: "systems", label: "Systems & Cloud", n: "02" },
@@ -1053,16 +1087,22 @@ export default function App() {
       else if (e.key === "6") openPanel("github");
       else if (e.key === "7") openPanel("contact");
       else if (e.key === "m" || e.key === "M") toggleSound();
+      else if (e.key === "v" || e.key === "V") toggleViewMode();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [openPanel, toggleSound]);
+  }, [openPanel, toggleSound, toggleViewMode]);
 
   return (
     <div>
       <a className="skip" href="#main">
         Skip to main content
       </a>
+
+      {/* Invisible Screen Reader Live Status Region */}
+      <div className="sr-only" aria-live="polite">
+        {toastMessage || (panel ? `${panel} dialog active` : "Workspace ready")}
+      </div>
 
       {/* Header Topbar */}
       <header className="topbar">
@@ -1085,6 +1125,17 @@ export default function App() {
 
         {/* Action Tools */}
         <div className="top-actions">
+          {/* Accessible View Mode Toggle: 3D Room <-> 2D Cards */}
+          <button
+            className="btn-icon"
+            onClick={toggleViewMode}
+            aria-label={forceMobileMode ? "Switch to 3D Room" : "Switch to Accessible 2D View"}
+            title={forceMobileMode ? "Switch to 3D Interactive Room (Press V)" : "Switch to Accessible 2D Cards (Press V)"}
+            style={{ fontWeight: 600, fontSize: "11.5px", padding: "0 8px" }}
+          >
+            {forceMobileMode ? "3D" : "2D"}
+          </button>
+
           <button
             className="btn-icon"
             onClick={toggleSound}
@@ -1119,7 +1170,7 @@ export default function App() {
       {/* Main Workspace */}
       <main className="workspace" id="main">
         {isFallback ? (
-          /* Mobile / Fallback Card View */
+          /* Mobile / Accessible 2D Card View */
           <div className="mobile-container">
             <div className="bio-box">
               <DoodleCharacter isStatic reducedMotion={reducedMotion} />
@@ -1143,7 +1194,7 @@ export default function App() {
                 {webglAvailable && (
                   <button
                     className="btn btn-g"
-                    onClick={() => setForceMobileMode((v) => !v)}
+                    onClick={toggleViewMode}
                   >
                     Switch to 3D Desk
                   </button>
@@ -1174,7 +1225,7 @@ export default function App() {
                 gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
                 shadows
                 onCreated={({ gl }) => {
-                  gl.setClearColor("#07090D");
+                  gl.setClearColor("#070A0F");
                 }}
               >
                 <Suspense fallback={null}>
